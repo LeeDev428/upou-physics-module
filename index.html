@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#7e3048">
+  <meta name="description" content="A free, self-paced introduction to forces and Newton’s laws. Explore everyday examples, try a force calculator, and check your understanding.">
+  <title>Module 1 · Physics in Everyday Life</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <script src="js/app.js" defer></script>
+  <script src="js/calculator.js" defer></script>
+  <script src="js/motion.js" defer></script>
+  <script src="js/quiz.js" defer></script>
+</head>
+<body>
+  <a href="#lesson-main" class="skip-link">Skip to lesson content</a>
+  <svg class="sr-only" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="icon-arrow" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></symbol>
+    <symbol id="icon-back" viewBox="0 0 24 24"><path d="M20 12H5m6-6-6 6 6 6"/></symbol>
+    <symbol id="icon-chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+    <symbol id="icon-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="icon-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="icon-book" viewBox="0 0 24 24"><path d="M12 5c-3-2-6-2-9-1v15c3-1 6-1 9 1 3-2 6-2 9-1V4c-3-1-6-1-9 1v15"/></symbol>
+    <symbol id="icon-leaf" viewBox="0 0 24 24"><path d="M20 3C8 2 3 7 5 14c2 7 13 7 15-11ZM4 21 16 9"/></symbol>
+    <symbol id="icon-bulb" viewBox="0 0 24 24"><path d="M8 17c0-4-3-4-3-8a7 7 0 0 1 14 0c0 4-3 4-3 8H8Zm1 4h6M9 17v-5m6 5v-5"/></symbol>
+    <symbol id="icon-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></symbol>
+    <symbol id="icon-menu" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.1M3 12h.1M3 18h.1"/></symbol>
+    <symbol id="icon-force" viewBox="0 0 24 24"><path d="M3 12h18m-6-6 6 6-6 6"/></symbol>
+    <symbol id="icon-cart-model" viewBox="0 0 44 32"><path d="M5 4h31v17H5z" fill="currentColor" fill-opacity=".18" stroke="currentColor" stroke-width="2"/><path d="M1 1h4v23h34" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="11" cy="27" r="4" fill="var(--paper)" stroke="currentColor" stroke-width="2"/><circle cx="32" cy="27" r="4" fill="var(--paper)" stroke="currentColor" stroke-width="2"/></symbol>
+  </svg>
+
+  <header class="site-header">
+    <a href="#welcome" class="brand" aria-label="Physics in Everyday Life, module home">
+      <svg class="brand-mark" viewBox="0 0 44 44" fill="none" aria-hidden="true"><ellipse cx="22" cy="22" rx="20" ry="7.5" transform="rotate(-35 22 22)" stroke="currentColor" stroke-width="1.5"/><ellipse cx="22" cy="22" rx="20" ry="7.5" transform="rotate(35 22 22)" stroke="currentColor" stroke-width="1.5"/><circle cx="22" cy="22" r="3.5" fill="currentColor"/><circle cx="36.3" cy="10.7" r="2.7" fill="#ad873d"/></svg>
+      <span><span class="brand-overline">An everyday science series</span><span class="brand-title">Physics in Everyday Life</span></span>
+    </a>
+    <div class="header-context"><svg class="icon" aria-hidden="true"><use href="#icon-book"/></svg><span class="header-label">Forces and Motion</span><span class="separator" aria-hidden="true"></span><span class="header-pill">Self-paced learning</span></div>
+  </header>
+
+  <button class="mobile-nav-toggle requires-js" id="mobile-nav-toggle" type="button" aria-expanded="false" aria-controls="module-sidebar">
+    <span class="mobile-nav-label"><svg class="icon" aria-hidden="true"><use href="#icon-menu"/></svg><span id="mobile-section-name">Start here</span></span>
+    <span class="mobile-progress"><span id="mobile-progress-text">0% complete</span><svg class="icon" aria-hidden="true"><use href="#icon-down"/></svg></span>
+  </button>
+
+  <div class="app-layout">
+    <aside class="sidebar" id="module-sidebar" aria-label="Module learning path">
+      <div class="sidebar-heading"><span class="eyebrow">Module 01</span><h2>Your learning path</h2><p>A few ideas. A new way to see the world.</p></div>
+      <nav class="section-nav" aria-label="Module sections">
+        <ol>
+          <li><a href="#welcome" aria-current="step"><span class="nav-number" aria-hidden="true">01</span><span class="nav-text">Start here</span><span class="nav-status sr-only"></span><span class="nav-current-dot" aria-hidden="true"></span></a></li>
+          <li><a href="#force"><span class="nav-number" aria-hidden="true">02</span><span class="nav-text">Understanding force</span><span class="nav-status sr-only"></span><span class="nav-current-dot" aria-hidden="true"></span></a></li>
+          <li><a href="#first-law"><span class="nav-number" aria-hidden="true">03</span><span class="nav-text">Newton’s First Law</span><span class="nav-status sr-only"></span><span class="nav-current-dot" aria-hidden="true"></span></a></li>
+          <li><a href="#second-law"><span class="nav-number" aria-hidden="true">04</span><span class="nav-text">Newton’s Second Law</span><span class="nav-status sr-only"></span><span class="nav-current-dot" aria-hidden="true"></span></a></li>
+          <li><a href="#third-law"><span class="nav-number" aria-hidden="true">05</span><span class="nav-text">Newton’s Third Law</span><span class="nav-status sr-only"></span><span class="nav-current-dot" aria-hidden="true"></span></a></li>
+          <li><a href="#everyday-forces"><span class="nav-number" aria-hidden="true">06</span><span class="nav-text">Everyday forces</span><span class="nav-status sr-only"></span><span class="nav-current-dot" aria-hidden="true"></span></a></li>
+          <li><a href="#activity"><span class="nav-number" aria-hidden="true">07</span><span class="nav-text">Try it: the cart activity</span><span class="nav-status sr-only"></span><span class="nav-current-dot" aria-hidden="true"></span></a></li>
+          <li><a href="#knowledge-check"><span class="nav-number" aria-hidden="true">08</span><span class="nav-text">Check your understanding</span><span class="nav-status sr-only"></span><span class="nav-current-dot" aria-hidden="true"></span></a></li>
+          <li><a href="#summary"><span class="nav-number" aria-hidden="true">09</span><span class="nav-text">Bring it all together</span><span class="nav-status sr-only"></span><span class="nav-current-dot" aria-hidden="true"></span></a></li>
+        </ol>
+      </nav>
+      <div class="sidebar-progress requires-js">
+        <div class="progress-label"><label for="module-progress">Your progress</label><span id="progress-percent">0%</span></div>
+        <progress id="module-progress" value="0" max="9">0 of 9 sections</progress>
+        <p class="progress-detail" id="progress-detail">0 of 9 sections completed</p>
+        <p class="save-message" id="save-message">Your place is saved on this device. Come back whenever you’re ready.</p>
+        <button class="text-button" id="reset-progress" type="button">Reset progress</button>
+      </div>
+      <div class="study-note"><svg class="icon" aria-hidden="true"><use href="#icon-leaf"/></svg><p>Small steps count.<br>Learn at a pace that works for you.</p></div>
+    </aside>
+
+    <main class="main-content" id="lesson-main" tabindex="-1">
+      <div class="breadcrumb-row"><div class="breadcrumb"><span>Forces and Motion</span><svg class="icon" aria-hidden="true"><use href="#icon-chevron"/></svg><span>Module 1</span></div><span class="lesson-count" id="lesson-count">GETTING STARTED</span></div>
+      <div class="no-js-content"><div class="callout"><h2>Read at your own pace</h2><p>JavaScript is off. All lesson content is available below. Enable JavaScript to use the calculator, interactive questions, and saved progress.</p></div></div>
+
+      <section class="lesson" id="welcome" aria-labelledby="welcome-title" data-title="Start here">
+        <div class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow"><span class="small-line" aria-hidden="true"></span>Module 1 · A foundation for motion</p>
+            <h1 id="welcome-title" tabindex="-1">Understanding Forces<br>&amp; <em>Newton’s Laws</em></h1>
+            <p class="hero-description">A moving jeepney. A push on a cart. A book resting on your desk. Discover the simple ideas behind the motion all around you.</p>
+          </div>
+          <figure class="hero-art"><img src="assets/jeepney.svg" width="480" height="365" alt="An illustrated green jeepney carrying passengers along a road, with an arrow pointing in its direction of motion."><figcaption>Big ideas begin with everyday moments.</figcaption></figure>
+        </div>
+        <div class="module-meta">
+          <span class="meta-item"><svg class="icon" aria-hidden="true"><use href="#icon-clock"/></svg><span>About <strong>2 hours</strong></span></span>
+          <span class="meta-item"><svg class="icon" aria-hidden="true"><use href="#icon-book"/></svg><span><strong>Introductory mathematics</strong></span></span>
+          <span class="meta-item"><svg class="icon" aria-hidden="true"><use href="#icon-leaf"/></svg><span><strong>Your pace, your place</strong></span></span>
+        </div>
+        <div class="start-row"><button type="button" class="button requires-js" id="start-learning"><span id="start-label">Start learning</span><svg class="icon" aria-hidden="true"><use href="#icon-arrow"/></svg></button><span class="start-note">9 short sections.<br>No rush. You can pause anytime.</span></div>
+        <div class="curiosity-card"><div class="curiosity-icon"><svg class="icon" aria-hidden="true"><use href="#icon-bulb"/></svg></div><div><p class="eyebrow">Before we begin, a little curiosity</p><h2>Why does your body move forward when a jeepney suddenly stops?</h2><p>Keep your first idea in mind. We’ll return to it in Newton’s First Law.</p></div><svg class="icon" aria-hidden="true"><use href="#icon-arrow"/></svg></div>
+        <div class="content-block">
+          <div class="section-heading"><h2>What you’ll learn</h2><span>Your learning objectives</span></div>
+          <ol class="objectives">
+            <li><span class="objective-number" aria-hidden="true">01</span><span>Describe force, net force, inertia, mass, and acceleration.</span></li>
+            <li><span class="objective-number" aria-hidden="true">02</span><span>Explain Newton’s three laws using everyday situations.</span></li>
+            <li><span class="objective-number" aria-hidden="true">03</span><span>Calculate acceleration using <strong>F<sub>net</sub> = ma</strong>.</span></li>
+            <li><span class="objective-number" aria-hidden="true">04</span><span>Predict how changes in force and mass affect acceleration.</span></li>
+            <li><span class="objective-number" aria-hidden="true">05</span><span>Recognize Newton’s laws in familiar situations around you.</span></li>
+          </ol>
+        </div>
+        <div class="content-block">
+          <div class="section-heading"><h2>One step in a bigger journey</h2><span>3 modules · About 6 hours</span></div>
+          <div class="course-map">
+            <article class="course-card current"><span>01 · You are here</span><h3>Understanding Forces and Newton’s Laws</h3><p>Build your foundation · 2 hours</p></article>
+            <article class="course-card"><span>02 · Next in the course</span><h3>Applying Newton’s Laws</h3><p>Course outline only</p></article>
+            <article class="course-card"><span>03 · Later in the course</span><h3>Forces and Motion in Real-World Situations</h3><p>Course outline only</p></article>
+          </div>
+          <p class="learning-tip"><strong>Make this time yours.</strong> Have paper ready for calculations. Read, make a prediction, try an activity, then use the feedback to rethink your answer. The two-hour estimate includes practice, reflection, and breaks; nothing is timed. Start here takes about 10 minutes.</p>
+        </div>
+      </section>
+
+      <section class="lesson" id="force" aria-labelledby="force-title" data-title="Understanding force">
+        <header class="lesson-header"><div class="lesson-topline"><span class="eyebrow">01 · The starting point</span><span class="duration">About 15 minutes</span></div><h1 id="force-title" tabindex="-1">A push. A pull. A force.</h1><p class="lesson-lead">Opening a door, kicking a ball, pulling a bag: you already know what forces feel like. Let’s give those experiences a name.</p><p class="goal-strip"><svg class="icon" aria-hidden="true"><use href="#icon-target"/></svg>Your goal: describe a force and find the net force in one dimension.</p></header>
+        <div class="prose"><h2>Every force has a size and a direction</h2><p>A <strong>force is a push or pull acting on an object</strong>. Its size is called its <strong>magnitude</strong>, measured in newtons (N). Its direction tells us where it acts. “15 N to the right” tells us both.</p><p>A nonzero net force can change an object’s speed, direction, or both. That change in velocity is called <strong>acceleration</strong>.</p></div>
+        <div class="two-column content-block"><article class="concept-card"><svg class="icon" aria-hidden="true"><use href="#icon-force"/></svg><h3>A change in speed</h3><p>A push can make a resting cart speed up. Friction can make a rolling ball slow down.</p></article><article class="concept-card"><svg class="icon" aria-hidden="true"><use href="#icon-target"/></svg><h3>A change in direction</h3><p>A sideways force can turn a moving ball. Its velocity changes even if its speed stays the same.</p></article></div>
+        <div class="content-block prose"><h2>When forces act together</h2><p>The <strong>net force</strong> is the combined effect of all forces acting on <strong>one object</strong>, taking direction into account. In a straight line, add forces in the same direction and subtract forces in opposite directions.</p></div>
+        <div class="interaction"><div class="interaction-heading"><span class="eyebrow">Your turn · Find the net force</span><span>Predict, then check</span></div><div class="interaction-body">
+          <figure class="force-stage"><div class="force-diagram" role="img" aria-label="A box has a 15-newton force to the right and a 5-newton force to the left."><div class="force-vector">15 N<span class="arrow-line" aria-hidden="true"></span></div><div class="box-object"><span>BOX</span></div><div class="force-vector opposing">5 N<span class="arrow-line" aria-hidden="true"></span></div></div><figcaption class="force-caption">Two horizontal forces act on the same box.</figcaption></figure>
+          <form class="practice-form requires-js" id="net-force-practice" novalidate><fieldset><legend>What is the net horizontal force on the box?</legend><div class="answer-options"><label class="radio-option"><input type="radio" name="net-force" value="0"><span>20 N to the right</span></label><label class="radio-option"><input type="radio" name="net-force" value="1"><span>10 N to the right</span></label><label class="radio-option"><input type="radio" name="net-force" value="2"><span>10 N to the left</span></label></div></fieldset><button class="button" type="submit">Check answer</button><div class="feedback" role="status" aria-live="polite"></div></form>
+          <div class="no-js-content"><p>The net force is 15 − 5 = <strong>10 N to the right</strong>, in the direction of the larger force.</p></div>
+        </div></div>
+        <div class="two-column content-block"><article class="concept-card"><h3>Balanced forces → no acceleration</h3><p>Equal opposing forces on an object give a net force of zero. It stays at rest or keeps moving with the same speed and direction.</p></article><article class="concept-card"><h3>Unbalanced forces → acceleration</h3><p>A nonzero net force changes velocity. Acceleration points in the direction of the net force; that need not be the direction the object is already moving.</p></article></div>
+        <div class="reflection"><p class="eyebrow">Pause &amp; predict</p><h3>What if both forces on the box were 15 N?</h3><details><summary>Check your prediction</summary><p>15 N right and 15 N left add to <strong>zero net horizontal force</strong>. There is no horizontal acceleration. A moving box would keep its velocity if all horizontal forces really stayed balanced.</p></details></div>
+      </section>
+
+      <section class="lesson" id="first-law" aria-labelledby="first-law-title" data-title="Newton’s First Law">
+        <header class="lesson-header"><div class="lesson-topline"><span class="eyebrow">02 · Newton’s First Law</span><span class="duration">About 15 minutes</span></div><h1 id="first-law-title" tabindex="-1">Motion doesn’t change on its own.</h1><p class="lesson-lead">An object does not need a net force to keep moving. It needs a net force to change how it is moving.</p><p class="goal-strip"><svg class="icon" aria-hidden="true"><use href="#icon-target"/></svg>Your goal: explain inertia and connect it to mass and everyday motion.</p></header>
+        <div class="law-statement"><span class="eyebrow">The law of inertia</span><p>An object stays at rest or keeps moving at constant velocity unless a nonzero net external force acts on it.</p></div>
+        <div class="section-heading"><h2>Meet inertia and mass</h2></div><div class="two-column"><article class="concept-card"><h3>Inertia: resistance to change</h3><p><strong>Inertia</strong> is an object’s tendency to resist a change in velocity. It is a property of the object, not a force that pushes it.</p></article><article class="concept-card"><h3>Mass: a measure of inertia</h3><p><strong>Mass</strong>, measured in kilograms (kg), measures resistance to acceleration. A greater mass needs more net force for the same acceleration.</p></article></div>
+        <div class="content-block prose"><h2>Back to that jeepney ride</h2><p>Before braking, you and the jeepney move together. When it slows, your body tends to keep its forward velocity. You move forward <strong>relative to the slowing vehicle</strong> until a force changes your motion.</p><p>No new forward force is needed to explain this. Your body is continuing the motion it already had.</p></div>
+        <div class="callout sand content-block"><h3>And the book on your desk?</h3><p>Gravity pulls it down and the desk pushes it up. These balanced forces give zero net force, so the book remains at rest. A sideways push can change that.</p></div>
+        <div class="reflection"><p class="eyebrow">Think about it</p><h3>Why do seatbelts help protect passengers when a vehicle suddenly stops?</h3><p>Pause for a moment. Explain it to yourself using the words <em>inertia</em> and <em>force</em>.</p><details><summary>Reveal the explanation</summary><p>Your body tends to keep moving forward because of inertia. A seatbelt applies a force that slows your body along with the vehicle, helping prevent you from being thrown forward. The seatbelt changes your motion; it does not “remove” your inertia.</p></details></div>
+        <div class="reflection"><p class="eyebrow">A useful distinction</p><h3>If inertia keeps objects moving, why does a kicked ball eventually stop?</h3><details><summary>Connect the idea</summary><p>Friction and air resistance act against its motion, producing a net force that slows it down. Newton’s First Law describes what happens when the <strong>net force is zero</strong>; that is not the case for this slowing ball.</p></details></div>
+      </section>
+
+      <section class="lesson" id="second-law" aria-labelledby="second-law-title" data-title="Newton’s Second Law">
+        <header class="lesson-header"><div class="lesson-topline"><span class="eyebrow">03 · Newton’s Second Law</span><span class="duration">About 20 minutes</span></div><h1 id="second-law-title" tabindex="-1">How much will motion change?</h1><p class="lesson-lead">The answer depends on two things: the net force on an object and its mass.</p><p class="goal-strip"><svg class="icon" aria-hidden="true"><use href="#icon-target"/></svg>Your goal: calculate acceleration and predict the effect of changing force or mass.</p></header>
+        <div class="formula-panel"><div class="formula-main"><div class="formula">F<sub>net</sub> = ma</div><div class="formula-alt">or, rearranged: <strong>a = F<sub>net</sub> / m</strong></div></div><dl class="formula-key"><div><dt>F<sub>net</sub></dt><dd>Net force, in newtons (N)</dd></div><div><dt>m</dt><dd>Mass, in kilograms (kg)</dd></div><div><dt>a</dt><dd>Acceleration, in metres per second squared (m/s²)</dd></div></dl></div>
+        <div class="prose content-block"><h2>Acceleration is a change in velocity</h2><p>Velocity describes speed <em>and</em> direction. Acceleration tells us how quickly velocity changes. Speeding up, slowing down, and turning are all forms of acceleration.</p><p>For a constant mass, acceleration points in the direction of the net force. We’ll work along one horizontal line: <strong>right is positive; left is negative</strong>.</p></div>
+        <div class="worked-example content-block"><div><span class="eyebrow">A worked example</span><h3>A 5 kg box. A net force of 20 N right.</h3><p>Identify the net force and mass, divide, and include the unit and direction.</p></div><div class="worked-math">a = F<sub>net</sub> / m<br>a = 20 N / 5 kg<strong>a = 4 m/s² to the right</strong></div></div>
+        <p class="learning-tip">This means velocity changes by 4 m/s toward the right each second while that net force acts. It does <strong>not</strong> mean the box’s speed is 4 m/s.</p>
+        <div class="reflection"><p class="eyebrow">Example B · Connect the two ideas</p><h3>A 5 kg box has a 15 N push right and 5 N of friction left. What is its acceleration?</h3><p>Find the net force first. Then use it in a = F<sub>net</sub> / m.</p><details><summary>Work through the example</summary><p>The net horizontal force is 15 N − 5 N = <strong>10 N to the right</strong>. Then a = 10 N / 5 kg = <strong>2 m/s² to the right</strong>. Use the net force of 10 N, rather than the applied force of 15 N alone.</p></details></div>
+        <div class="interaction requires-js"><div class="interaction-heading"><span class="eyebrow">Explore · Force calculator</span><span>Change one thing at a time</span></div><div class="interaction-body">
+          <p>First predict what will happen. Then change the force or mass and compare your result.</p>
+          <div class="calculator-grid"><form id="force-calculator" novalidate><div class="input-group"><label for="net-force-input">Net force</label><div class="number-input-wrap"><input type="number" id="net-force-input" value="20" step="any" aria-describedby="force-hint force-error" required><span>N</span></div><p class="field-hint" id="force-hint">Positive = right. Negative = left.</p><p class="field-error" id="force-error"></p></div><div class="input-group"><label for="mass-input">Mass</label><div class="number-input-wrap"><input type="number" id="mass-input" value="5" step="any" aria-describedby="mass-hint mass-error" required><span>kg</span></div><p class="field-hint" id="mass-hint">Use a mass greater than zero.</p><p class="field-error" id="mass-error"></p></div><button type="submit" class="button calculator-submit">Calculate acceleration<svg class="icon" aria-hidden="true"><use href="#icon-arrow"/></svg></button></form>
+          <div class="calculator-result" id="calculator-result" role="status" aria-live="polite" aria-atomic="true"><span class="eyebrow">Acceleration</span><p class="result-number"><output id="acceleration-output" for="net-force-input mass-input">4</output> <span>m/s²</span></p><p class="result-direction" id="acceleration-direction">→ To the right</p><p class="result-working" id="calculation-working">20 N ÷ 5 kg = 4 m/s²</p></div></div>
+          <div class="preset-row" aria-label="Calculator examples"><span>Try an example:</span><button class="preset" type="button" data-force="20" data-mass="5" aria-pressed="true">Original · 20 N, 5 kg</button><button class="preset" type="button" data-force="40" data-mass="5" aria-pressed="false">Double the force</button><button class="preset" type="button" data-force="20" data-mass="10" aria-pressed="false">Double the mass</button><button class="preset" type="button" data-force="-20" data-mass="5" aria-pressed="false">Reverse the force</button></div>
+        </div></div>
+        <div class="two-column content-block"><article class="concept-card"><h3>More force, same mass</h3><p>Double the net force from 20 N to 40 N on 5 kg: acceleration doubles from <strong>4 to 8 m/s²</strong>.</p></article><article class="concept-card"><h3>More mass, same force</h3><p>Double the mass from 5 kg to 10 kg with 20 N: acceleration becomes half as large, from <strong>4 to 2 m/s²</strong>.</p></article></div>
+        <div class="reflection"><p class="eyebrow">Try it on paper</p><h3>What acceleration would a 2 kg object have under 6 N of net force to the left?</h3><details><summary>Check the steps</summary><p>Use left as negative: a = −6 N / 2 kg = <strong>−3 m/s²</strong>, or 3 m/s² to the left. The minus sign tells you direction, not “less acceleration.”</p></details></div>
+      </section>
+
+      <section class="lesson" id="third-law" aria-labelledby="third-law-title" data-title="Newton’s Third Law">
+        <header class="lesson-header"><div class="lesson-topline"><span class="eyebrow">04 · Newton’s Third Law</span><span class="duration">About 15 minutes</span></div><h1 id="third-law-title" tabindex="-1">Every interaction has two sides.</h1><p class="lesson-lead">When you push on something, it pushes back on you. These two forces happen at the same time.</p><p class="goal-strip"><svg class="icon" aria-hidden="true"><use href="#icon-target"/></svg>Your goal: identify an interaction pair and explain why its forces do not cancel.</p></header>
+        <div class="law-statement"><span class="eyebrow">Equal in size. Opposite in direction.</span><p>When object A exerts a force on object B, object B exerts an equal-magnitude force in the opposite direction on object A.</p></div>
+        <div class="section-heading"><h2 id="wall-demo-title">A push against a wall</h2></div>
+        <div class="motion-demo wall-demo" id="wall-demo" role="group" aria-labelledby="wall-demo-title">
+          <p class="demo-intro">Watch the hands reach the wall. Once the person pushes, do the two forces appear together?</p>
+          <figure class="pair-figure">
+            <svg viewBox="50 30 330 220" role="img" aria-labelledby="pair-title pair-description">
+              <title id="pair-title">A person pushes a wall</title><desc id="pair-description">A person reaches toward a stationary wall. During the push, equal arrows point right on the wall and left on the person. The force values and explanation are provided below.</desc>
+              <defs><pattern id="wall-pattern" width="30" height="22" patternUnits="userSpaceOnUse"><rect width="30" height="22" fill="#dce1d1"/><path d="M0 0h30M0 0v22M15 11h15M15 11v11" stroke="#aab79e" stroke-width="1"/></pattern></defs>
+              <path d="M65 218h300" stroke="#96a48c" stroke-width="2"/>
+              <path d="m153 150-21 62m23-60 39 60" stroke="#355747" stroke-width="12" stroke-linecap="round"/>
+              <path d="m150 104 5 47" stroke="#7e3048" stroke-width="22" stroke-linecap="round"/>
+              <circle cx="150" cy="75" r="16" fill="#be9875"/>
+              <path id="wall-arm-back" d="M150 115 210 118 271 114" stroke="#a27b59" stroke-width="8" stroke-linecap="round" fill="none"/>
+              <path id="wall-arm-front" d="M158 106 212 94 271 100" stroke="#be9875" stroke-width="9" stroke-linecap="round" fill="none"/>
+              <rect x="276" y="38" width="78" height="179" fill="url(#wall-pattern)" stroke="#7a8b70" stroke-width="2"/>
+              <path id="wall-force-right" d="M276 145h72m-8-6 8 6-8 6" stroke="#28584b" stroke-width="3" fill="none"/>
+              <path id="wall-force-left" d="M276 179h-72m8-6-8 6 8 6" stroke="#7e3048" stroke-width="3" fill="none"/>
+              <text x="116" y="243" fill="#606862" font-family="Segoe UI,Arial,sans-serif" font-size="15">PERSON</text><text x="291" y="243" fill="#606862" font-family="Segoe UI,Arial,sans-serif" font-size="15">WALL</text>
+            </svg>
+            <div class="force-pair-values"><p><span>Person → wall</span><strong><span data-pair-force>30</span> N right</strong></p><p><span>Wall → person</span><strong><span data-pair-force>30</span> N left</strong></p></div>
+            <figcaption>Arrows are offset so both can be seen. They show forces on <strong>different objects</strong>. Other forces keep the person and wall at rest; only the hand–wall interaction is shown.</figcaption>
+          </figure>
+          <p class="demo-explanation" data-demo-explanation>The person pushes the wall right with 30 N. At the same time, the wall pushes the person left with 30 N. A stationary object can exert a force.</p>
+          <div class="demo-controls requires-js"><button class="button" type="button" data-motion-play>Play push</button><button class="button button-secondary" type="button" data-motion-step>Next step</button><button class="text-button" type="button" data-motion-replay>Replay</button><span class="demo-time" data-motion-time>Step 1 of 5</span></div>
+          <p class="motion-preference requires-js" data-motion-preference hidden>Reduced motion is enabled. Use Next step to view still frames at your own pace.</p>
+          <p class="sr-only" role="status" aria-live="polite" data-motion-status></p>
+        </div>
+        <div class="misconception"><div class="myth"><span class="eyebrow">A common misconception</span><p>“The two forces cancel each other.”</p></div><div class="correction"><span class="eyebrow">Here’s the key</span><p>They act on <strong>different objects</strong>. To find a net force, combine only the forces acting on the <strong>same object</strong>.</p></div></div>
+        <div class="interaction"><div class="interaction-heading"><span class="eyebrow">Your turn · Name the object</span><span>One interaction, two objects</span></div><div class="interaction-body"><form class="practice-form requires-js" id="third-law-practice" novalidate><fieldset><legend>You push a wall with 30 N. Which statement describes the paired force?</legend><div class="answer-options"><label class="radio-option"><input type="radio" name="third-pair" value="0"><span>The wall pushes you with 30 N in the opposite direction.</span></label><label class="radio-option"><input type="radio" name="third-pair" value="1"><span>The wall pushes itself with 30 N.</span></label><label class="radio-option"><input type="radio" name="third-pair" value="2"><span>The wall exerts no force because it does not move.</span></label></div></fieldset><button class="button" type="submit">Check answer</button><div class="feedback" role="status" aria-live="polite"></div></form><div class="no-js-content"><p>The wall pushes you with 30 N in the opposite direction. It can exert a force even though it stays still.</p></div></div></div>
+        <div class="reflection"><p class="eyebrow">Find the pair</p><h3>As you walk, your foot pushes the ground backward. What pushes you forward?</h3><details><summary>Reveal the other side</summary><p>The ground exerts a forward frictional force on your foot. Your backward force acts on the ground; the ground’s forward force acts on you. These are a Newton’s Third Law pair.</p></details></div>
+      </section>
+
+      <section class="lesson" id="everyday-forces" aria-labelledby="everyday-forces-title" data-title="Everyday forces">
+        <header class="lesson-header"><div class="lesson-topline"><span class="eyebrow">05 · Spot the forces</span><span class="duration">About 10 minutes</span></div><h1 id="everyday-forces-title" tabindex="-1">One box. Several forces.</h1><p class="lesson-lead">Real objects often experience more than one force. Start by naming what acts on the object and in which direction.</p><p class="goal-strip"><svg class="icon" aria-hidden="true"><use href="#icon-target"/></svg>Your goal: recognize familiar forces and distinguish horizontal and vertical effects.</p></header>
+        <div class="section-heading"><h2>Meet the four forces</h2></div><figure><div class="everyday-diagram" role="img" aria-label="For a box sliding to the right on a level surface: normal force points up, gravity points down, applied force points right, and friction points left. The arrows show direction, not relative magnitude."><div class="vector-up">Normal force<span class="vertical-arrow" aria-hidden="true">↑</span></div><div class="force-vector opposing vector-left">Friction<span class="arrow-line" aria-hidden="true"></span></div><div class="box-object"><span>BOX</span></div><div class="force-vector vector-right">Applied force<span class="arrow-line" aria-hidden="true"></span></div><div class="vector-down"><span class="vertical-arrow" aria-hidden="true">↓</span>Gravity</div></div><figcaption>A box sliding right on a level surface. Arrows show direction, not relative size.</figcaption></figure>
+        <div class="force-list"><div><h3>Applied force →</h3><p>The push on the box, in this example toward the right.</p></div><div><h3>← Friction</h3><p>The surface resists the box’s sliding motion, toward the left.</p></div><div><h3>Gravity ↓</h3><p>Earth pulls the box downward. This force is the box’s weight.</p></div><div><h3>Normal force ↑</h3><p>The surface pushes the box upward, perpendicular to the surface.</p></div></div>
+        <div class="callout content-block"><h3>Balance in one direction does not mean balance in every direction.</h3><p>If the upward and downward forces balance, vertical acceleration is zero. The box can still accelerate horizontally if the applied force and friction are unbalanced.</p></div>
+        <div class="interaction"><div class="interaction-heading"><span class="eyebrow">Your turn · Make a prediction</span><span>Think in two directions</span></div><div class="interaction-body"><form class="practice-form requires-js" id="everyday-practice" novalidate><fieldset><legend>The vertical forces balance. The push is 15 N right and friction is 5 N left. What happens?</legend><div class="answer-options"><label class="radio-option"><input type="radio" name="everyday" value="0"><span>The box has no acceleration in any direction.</span></label><label class="radio-option"><input type="radio" name="everyday" value="1"><span>The box accelerates right, with zero vertical acceleration.</span></label><label class="radio-option"><input type="radio" name="everyday" value="2"><span>The box accelerates upward and right.</span></label></div></fieldset><button class="button" type="submit">Check answer</button><div class="feedback" role="status" aria-live="polite"></div></form><div class="no-js-content"><p>The net horizontal force is 10 N right, so the box accelerates right. Its vertical acceleration is zero.</p></div></div></div>
+        <p class="learning-tip"><strong>Keep the laws distinct.</strong> The normal force and gravity both act on the box; they are not a Third Law pair. We’ll explore force diagrams in Module 2. For now, focus on identifying forces and their directions.</p>
+      </section>
+
+      <section class="lesson" id="activity" aria-labelledby="activity-title" data-title="The cart activity">
+        <header class="lesson-header"><div class="lesson-topline"><span class="eyebrow">06 · Put your ideas to work</span><span class="duration">About 10 minutes</span></div><h1 id="activity-title" tabindex="-1">Same cart. What changes?</h1><p class="lesson-lead">A student pushes a cart. Before reaching for the formula, make a prediction about what happens when just one thing changes.</p><p class="goal-strip"><svg class="icon" aria-hidden="true"><use href="#icon-target"/></svg><span>Your goal: use a = F<sub>net</sub> / m to explain two everyday comparisons.</span></p></header>
+        <div class="callout"><h2>Your starting point</h2><p>The cart has a mass of <strong>5 kg</strong> and a net force of <strong>20 N to the right</strong>. Its acceleration is <strong>4 m/s² to the right</strong>. Each scenario below starts from this same original cart.</p></div>
+        <div class="two-column activity-grid">
+          <div class="interaction"><div class="interaction-heading"><span class="eyebrow">Scenario A</span><span>Change the force</span></div><div class="interaction-body"><div class="cart-scene" aria-hidden="true"><div class="cart-track"><div class="cart-object"><span class="cart-handle"></span><div class="cart-mass">5 kg</div></div><div class="cart-force-arrow">40 N right<span class="arrow-line"></span></div></div><p>Double the net force · Same mass</p></div><form class="practice-form requires-js" id="cart-force-practice" novalidate><fieldset><legend>If the net force doubles while mass stays the same, acceleration…</legend><div class="answer-options"><label class="radio-option"><input type="radio" name="cart-force" value="0"><span>stays the same.</span></label><label class="radio-option"><input type="radio" name="cart-force" value="1"><span>doubles.</span></label><label class="radio-option"><input type="radio" name="cart-force" value="2"><span>becomes half as large.</span></label></div></fieldset><button class="button" type="submit">Check prediction</button><div class="feedback" role="status" aria-live="polite"></div></form><div class="no-js-content"><p>Acceleration doubles: 40 N / 5 kg = 8 m/s² right.</p></div></div></div>
+          <div class="interaction"><div class="interaction-heading"><span class="eyebrow">Scenario B</span><span>Change the mass</span></div><div class="interaction-body"><div class="cart-scene" aria-hidden="true"><div class="cart-track"><div class="cart-object"><span class="cart-handle"></span><div class="cart-mass">10 kg</div></div><div class="cart-force-arrow">20 N right<span class="arrow-line"></span></div></div><p>Double the mass · Same net force</p></div><form class="practice-form requires-js" id="cart-mass-practice" novalidate><fieldset><legend>If mass doubles while the same net force is applied, acceleration…</legend><div class="answer-options"><label class="radio-option"><input type="radio" name="cart-mass" value="0"><span>doubles.</span></label><label class="radio-option"><input type="radio" name="cart-mass" value="1"><span>stays the same.</span></label><label class="radio-option"><input type="radio" name="cart-mass" value="2"><span>becomes half as large.</span></label></div></fieldset><button class="button" type="submit">Check prediction</button><div class="feedback" role="status" aria-live="polite"></div></form><div class="no-js-content"><p>Acceleration halves: 20 N / 10 kg = 2 m/s² right.</p></div></div></div>
+        </div>
+        <div class="motion-demo content-block" id="cart-demo" role="group" aria-labelledby="cart-demo-title">
+          <div class="section-heading"><h2 id="cart-demo-title">Now compare the motion</h2></div>
+          <p class="demo-intro">Make your predictions above, then watch. All three carts start <strong>from rest</strong> at the same place and time. Each net force stays constant and points right.</p>
+          <div class="cart-comparison">
+            <div class="comparison-lane" data-force="20" data-mass="5">
+              <div class="lane-heading"><h3>Original cart</h3><span>20 N · 5 kg · <strong>4 m/s²</strong></span></div>
+              <div class="motion-track" aria-hidden="true"><svg class="moving-cart" viewBox="0 0 44 32"><use href="#icon-cart-model"/></svg></div>
+              <p class="lane-reading"><span>Distance: <strong data-distance>8.0</strong> m</span><span>Speed: <strong data-speed>8.0</strong> m/s</span></p>
+            </div>
+            <div class="comparison-lane force-lane" data-force="40" data-mass="5">
+              <div class="lane-heading"><h3>A · Double the force</h3><span>40 N · 5 kg · <strong>8 m/s²</strong></span></div>
+              <div class="motion-track" aria-hidden="true"><svg class="moving-cart" viewBox="0 0 44 32"><use href="#icon-cart-model"/></svg></div>
+              <p class="lane-reading"><span>Distance: <strong data-distance>16.0</strong> m</span><span>Speed: <strong data-speed>16.0</strong> m/s</span></p>
+            </div>
+            <div class="comparison-lane mass-lane" data-force="20" data-mass="10">
+              <div class="lane-heading"><h3>B · Double the mass</h3><span>20 N · 10 kg · <strong>2 m/s²</strong></span></div>
+              <div class="motion-track" aria-hidden="true"><svg class="moving-cart" viewBox="0 0 44 32"><use href="#icon-cart-model"/></svg></div>
+              <p class="lane-reading"><span>Distance: <strong data-distance>4.0</strong> m</span><span>Speed: <strong data-speed>4.0</strong> m/s</span></p>
+            </div>
+            <div class="motion-axis" aria-hidden="true"><span>0 m</span><span>8 m</span><span>16 m →</span></div>
+          </div>
+          <p class="demo-scale">One distance scale and one clock for all three carts. Playback shows two model seconds at half speed. Speeds are to the right.</p>
+          <p class="demo-explanation" data-demo-explanation>After 2 seconds: the original cart travels 8 m, double the force gives 16 m, and double the mass gives 4 m. Greater acceleration means speed increases more each second.</p>
+          <div class="demo-controls requires-js"><button class="button" type="button" data-motion-play>Play comparison</button><button class="button button-secondary" type="button" data-motion-step>Next step</button><button class="text-button" type="button" data-motion-replay>Replay</button><span class="demo-time" data-motion-time>Model time: 0.0 / 2.0 s</span></div>
+          <p class="motion-preference requires-js" data-motion-preference hidden>Reduced motion is enabled. Use Next step to view still frames at your own pace.</p>
+          <p class="sr-only" role="status" aria-live="polite" data-motion-status></p>
+          <p class="learning-tip">The view pauses after 2 seconds so you can compare results. The carts would keep accelerating if the same net forces continued. These are motion snapshots, not a race.</p>
+        </div>
+        <div class="reflection"><p class="eyebrow">Take it one step further</p><h3>What if you doubled both the net force and the mass?</h3><p>Use the calculator or work it out on paper before opening the explanation.</p><details><summary>Compare your reasoning</summary><p>The changes balance out: a = 40 N / 10 kg = <strong>4 m/s² right</strong>, the same acceleration as the original cart. The ratio F<sub>net</sub> / m stays the same.</p></details></div>
+        <p class="learning-tip">Explore both scenarios to complete this activity. An incorrect prediction is a useful starting point—read the feedback and try again.</p>
+      </section>
+
+      <section class="lesson" id="knowledge-check" aria-labelledby="knowledge-check-title" data-title="Check your understanding">
+        <header class="lesson-header"><div class="lesson-topline"><span class="eyebrow">07 · A moment to reflect</span><span class="duration">About 15 minutes</span></div><h1 id="knowledge-check-title" tabindex="-1">Let’s see what’s clicking.</h1><p class="lesson-lead">Six questions to connect the ideas. This is practice, not an exam. Use the feedback, revisit a lesson, and try again whenever you need to.</p><p class="goal-strip"><svg class="icon" aria-hidden="true"><use href="#icon-target"/></svg>Your first-try score helps you spot what to review. Every question can be retried.</p></header>
+        <div id="quiz-root" class="quiz-shell requires-js"></div>
+        <div class="no-js-content"><div class="prose"><h2>A check you can do on paper</h2><ol><li>What is a force?</li><li>A 4 kg object experiences 12 N of net force to the right. What is its acceleration?</li><li>True or false: a larger object always moves faster than a smaller object.</li><li>A person pushes a wall. What does Newton’s Third Law predict?</li><li>A moving object has zero net force. What happens to its velocity?</li><li>The same net force acts on an empty cart and a full cart. Which accelerates less?</li></ol><details><summary>Check your reasoning</summary><p>1. A push or pull on an object. 2. 12 / 4 = 3 m/s² right. 3. False: mass alone does not determine velocity. 4. The wall exerts an equal, opposite force on the person. 5. Velocity stays constant: same speed and direction. 6. The full cart has greater mass, so its acceleration is smaller.</p></details></div></div>
+      </section>
+
+      <section class="lesson" id="summary" aria-labelledby="summary-title" data-title="Bring it all together">
+        <header class="lesson-header"><div class="lesson-topline"><span class="eyebrow">08 · Your new lens on the everyday</span><span class="duration">About 10 minutes</span></div><h1 id="summary-title" tabindex="-1">Three laws. A world of connections.</h1><p class="lesson-lead">You’ve explored the ideas behind pushes, pulls, and changes in motion. Keep these connections with you the next time you ride, walk, or move something.</p></header>
+        <h2 class="sr-only">The three laws at a glance</h2><div class="three-column"><article class="concept-card"><span class="eyebrow">First Law</span><h3>Motion continues</h3><p>Objects resist changes in motion. With zero net force, velocity stays constant—including staying at rest.</p></article><article class="concept-card"><span class="eyebrow">Second Law</span><h3>Force changes motion</h3><p>Net force, mass, and acceleration are related by <strong>F<sub>net</sub> = ma</strong>. At fixed mass, more net force means greater acceleration. At fixed net force, more mass means less acceleration.</p></article><article class="concept-card"><span class="eyebrow">Third Law</span><h3>Forces come in pairs</h3><p>Interactions produce equal and opposite forces acting on <strong>different objects</strong>.</p></article></div>
+        <div class="content-block"><div class="section-heading"><h2>Five ideas to take away</h2></div><dl class="glossary"><div><dt>Force</dt><dd>A push or pull with magnitude and direction, measured in newtons (N).</dd></div><div><dt>Net force</dt><dd>The combined effect of forces on one object, accounting for direction.</dd></div><div><dt>Inertia</dt><dd>An object’s tendency to resist a change in velocity. Inertia is not a force.</dd></div><div><dt>Mass</dt><dd>A measure of resistance to acceleration, in kilograms (kg).</dd></div><div><dt>Acceleration</dt><dd>The rate of change of velocity, in m/s². It can mean speeding up, slowing down, or turning.</dd></div></dl></div>
+        <div class="reflection"><p class="eyebrow">Return to your first idea</p><h3>Why does your body move forward when a jeepney suddenly stops?</h3><p>Explain it again now. What would you add to your first answer? Then choose one other everyday example and explain which law helps you understand it.</p><details><summary>Check the connection</summary><p>Your body tends to continue moving forward while the vehicle slows. This is inertia, described by Newton’s First Law. A force is needed to slow your body down. You move forward relative to the jeepney, not because a new forward force has appeared.</p></details></div>
+        <div id="completion-message" class="completion-message requires-js" hidden tabindex="-1"></div>
+        <div class="next-module"><svg class="icon" aria-hidden="true"><use href="#icon-book"/></svg><div><span class="eyebrow">Your journey continues</span><h2>Next: Module 2 — Applying Newton’s Laws</h2><p>Build on these ideas with force diagrams and everyday problems. Module 2 is a separate part of the course and is not included in this learning module.</p></div></div>
+      </section>
+
+      <nav class="lesson-navigation requires-js" id="lesson-navigation" aria-label="Continue your learning" hidden><button type="button" class="button button-quiet" id="previous-section"><svg class="icon" aria-hidden="true"><use href="#icon-back"/></svg>Previous</button><span id="section-position">Section 2 of 9</span><button type="button" class="button" id="next-section"><span id="next-label">Complete &amp; continue</span><svg class="icon" aria-hidden="true"><use href="#icon-arrow"/></svg></button></nav>
+      <p class="global-status" id="global-status" role="status" aria-live="polite"></p>
+      <footer class="site-footer"><p>Physics in Everyday Life · A UPOU practical assessment project</p><p class="footer-note"><svg class="icon" aria-hidden="true"><use href="#icon-leaf"/></svg>Made for curious minds. Designed for your pace.</p></footer>
+    </main>
+  </div>
+  <dialog id="reset-dialog" aria-labelledby="reset-title" aria-describedby="reset-description"><h2 id="reset-title">A fresh start?</h2><p id="reset-description">This will clear your saved section progress, practice answers, and quiz attempts on this device. You can start the module again from the beginning.</p><div class="dialog-actions"><button type="button" class="button button-secondary" id="cancel-reset" autofocus>Keep learning</button><button type="button" class="button" id="confirm-reset">Reset progress</button></div></dialog>
+</body>
+</html>
