@@ -1,6 +1,6 @@
 # Module 1 verification record
 
-Verified locally on **17 November 2026** with **Chromium 156.0.8078.4** using Playwright. The last completed verification run passed **227 checks**, including **18 axe accessibility scans** of all nine sections at mobile and desktop widths. There were **zero JavaScript/console errors**, **zero failed resource requests**, and **zero axe violations** in the tested states.
+Verified locally on **17 November 2026** with **Chromium 156.0.8078.4** using Playwright. The last completed verification run passed **258 checks**, including **18 axe accessibility scans** of all nine sections at mobile and desktop widths. There were **zero JavaScript/console errors**, **zero failed resource requests**, and **zero axe violations** in the tested states.
 
 The machine-readable evidence is [qa/results.json](./qa/results.json). The repeatable browser checks are in [qa/verify.cjs](./qa/verify.cjs).
 
@@ -18,6 +18,17 @@ The machine-readable evidence is [qa/results.json](./qa/results.json). The repea
 ## Calculator
 
 Verified positive, negative, zero, fractional, and very small forces; fractional mass; all four presets; blank inputs; zero/negative mass; arithmetic overflow and underflow; and clearing a stale result after editing an input. Errors are associated with inputs and move focus to the first invalid field. Zero net force is described as constant velocity, not necessarily rest.
+
+## Learner-controlled demonstrations
+
+- The cart comparison uses a shared two-second model clock, constant net forces, and a common distance scale. Its numerical speeds, distances, and drawn positions were checked at 0.5, 1.0, 1.5, and 2.0 seconds for accelerations of 4, 8, and 2 m/s².
+- The person-and-wall illustration moves the arms into contact, then shows both forces increasing together. Both force values and arrow lengths remain equal; the objects receiving them and their opposite directions are explicit. The wall remains stationary.
+- Tests cover no autoplay, Play/Pause, Replay, keyboard continuation, still steps, stopping at the end, pausing when leaving a lesson or opening reset, reset/reload behavior, and direct-file operation.
+- Reduced-motion preferences expose still-step controls and a clear explanation. Changing the preference during playback stops motion even if the browser delays its media-query change event. Changing it back does not start playback.
+- Print uses useful final snapshots and hides playback controls. Leaving print restores the learner's previous frame. Without JavaScript, both diagrams retain explanatory text and complete static results.
+- Watching a demonstration does not complete the cart activity; both learner predictions are still required.
+
+The demonstrations add no remote media or runtime library. Text and numerical results carry the same learning point as movement.
 
 ## Quiz
 
@@ -40,7 +51,7 @@ A run with incorrect initial responses followed by correct retries retained its 
 
 All nine sections were checked at **320, 375, 768, and 1440 CSS pixels**. No horizontal page overflow was found. Desktop, tablet, and mobile screenshots were visually inspected; this review corrected an SVG curve, small diagram labels, and a formula wrapping issue.
 
-Keyboard checks cover the skip link, focus after navigation, radio arrow keys, submitting an answer with Enter, disclosure controls, the mobile menu, and Escape/focus restoration for both the menu and reset dialog. Reduced-motion settings disable transitions. Print media exposes all nine lessons.
+Keyboard checks cover the skip link, focus after navigation, radio arrow keys, submitting an answer with Enter, disclosure controls, animation continuation and still steps, the mobile menu, and Escape/focus restoration for both the menu and reset dialog. Reduced-motion settings disable transitions and continuous playback. Print media exposes all nine lessons and static demonstration results.
 
 The document was checked for duplicate IDs, missing local assets, broken internal anchors, invalid ARIA references, unlabelled inputs, external resource requests, and HTML nesting issues. JavaScript syntax checks and SVG parsing passed. Unused CSS and icon definitions were removed.
 
@@ -50,6 +61,8 @@ The axe scans used the `wcag2a`, `wcag2aa`, `wcag21aa`, and `best-practice` rule
 
 - [Desktop welcome](./qa/desktop-welcome.png)
 - [Desktop calculator](./qa/desktop-calculator.png)
+- [Desktop cart comparison](./qa/desktop-cart-comparison.png)
+- [Desktop person-and-wall demonstration](./qa/desktop-wall-demonstration.png)
 - [Desktop quiz results](./qa/desktop-quiz-results.png)
 - [Tablet welcome](./qa/tablet-welcome.png)
 - [Mobile welcome](./qa/mobile-welcome.png)
