@@ -2,6 +2,8 @@
 
 A responsive, self-paced learning module for secondary-level students, prepared as a practical assessment project for the UPOU Center for Open and Digital Teaching and Learning. This is an assessment prototype, not an official university learning platform.
 
+**To view the module:** extract the whole ZIP, then open [index.html](./index.html) in Chrome or Edge. No installation or internet connection is required for the extracted local copy. See section 9 for preview, submission, and interview guidance.
+
 ## 1. Project overview
 
 **Module 1 — Understanding Forces and Newton’s Laws** introduces force, net force, inertia, mass, acceleration, and Newton’s three laws through short explanations, familiar situations, guided practice, and formative assessment.
