@@ -48,6 +48,77 @@ const readState = page => page.evaluate(key => JSON.parse(localStorage.getItem(k
   await page.locator('#previous-section').click();
   check('Previous returns to Welcome without erasing completion', await page.locator('#welcome').isVisible() && (await readState(page)).completed.length === 1);
 
+  await go(page, 'activity');
+  const cartDemo = page.locator('#cart-demo');
+  const wallDemo = page.locator('#wall-demo');
+  check('Motion demonstrations never autoplay', await cartDemo.getAttribute('data-motion-state') === 'ready' && await wallDemo.getAttribute('data-motion-state') === 'ready');
+  for (let step = 1; step <= 4; step++) {
+    await cartDemo.locator('[data-motion-step]').click();
+    const seconds = step / 2;
+    const values = await cartDemo.locator('.comparison-lane').evaluateAll(lanes => lanes.map(lane => ({
+      distance: lane.querySelector('[data-distance]').textContent,
+      speed: lane.querySelector('[data-speed]').textContent,
+      position: parseFloat(lane.querySelector('.moving-cart').style.left)
+    })));
+    check(`Cart at ${seconds}s: distances and speeds follow constant acceleration from rest`, values.every((value, index) => {
+      const acceleration = [4, 8, 2][index];
+      return value.distance === (0.5 * acceleration * seconds ** 2).toFixed(1) && value.speed === (acceleration * seconds).toFixed(1);
+    }));
+    check(`Cart at ${seconds}s: all lanes use the same distance scale`, values.every((value, index) => Math.abs(value.position - (0.5 * [4, 8, 2][index] * seconds ** 2 / 16 * 100)) < 0.001));
+  }
+  check('Cart comparison ends at exactly 2 seconds without looping', await cartDemo.getAttribute('data-motion-state') === 'finished' && await cartDemo.locator('[data-motion-step]').isDisabled());
+  check('Viewing the animation does not bypass the two prediction activities', !(await readState(page)).completed.includes('activity'));
+  await cartDemo.screenshot({ path: path.join(__dirname, 'desktop-cart-comparison.png') });
+  report.screenshots.push('desktop-cart-comparison.png');
+  await cartDemo.locator('[data-motion-replay]').click();
+  await page.waitForFunction(() => Number(document.querySelector('#cart-demo [data-speed]').textContent) > 0);
+  await cartDemo.locator('[data-motion-play]').click();
+  const pausedTime = await cartDemo.locator('[data-motion-time]').innerText();
+  await page.waitForTimeout(150);
+  check('Pause freezes motion and its numerical readout', await cartDemo.getAttribute('data-motion-state') === 'paused' && await cartDemo.locator('[data-motion-time]').innerText() === pausedTime);
+  await cartDemo.locator('[data-motion-play]').focus(); await page.keyboard.press('Enter');
+  await page.waitForFunction(previous => document.querySelector('#cart-demo [data-motion-time]').textContent !== previous, pausedTime);
+  check('Keyboard Continue resumes the same demonstration', await cartDemo.getAttribute('data-motion-state') === 'running');
+  await go(page, 'third-law');
+  check('Leaving a lesson pauses its animation', await cartDemo.getAttribute('data-motion-state') === 'paused');
+  await wallDemo.locator('[data-motion-play]').click();
+  await page.waitForFunction(() => { const force = Number(document.querySelector('[data-pair-force]').textContent); return force > 0 && force < 30; });
+  const wallDuringPush = await wallDemo.evaluate(root => {
+    const values = [...root.querySelectorAll('[data-pair-force]')].map(item => Number(item.textContent));
+    const right = root.querySelector('#wall-force-right').getBBox();
+    const left = root.querySelector('#wall-force-left').getBBox();
+    return { values, right: right.width, left: left.width };
+  });
+  check('The contact forces grow together with equal arrow lengths', wallDuringPush.values[0] === wallDuringPush.values[1] && Math.abs(wallDuringPush.right - wallDuringPush.left) < 0.01);
+  await wallDemo.locator('[data-motion-play]').click();
+  check('Wall push can be paused with an accessible textual explanation', (await wallDemo.locator('[data-motion-status]').innerText()).includes('Paused') && await wallDemo.getAttribute('data-motion-state') === 'paused');
+  await wallDemo.locator('[data-motion-replay]').click();
+  await page.waitForFunction(() => document.querySelector('#wall-demo').dataset.motionState === 'finished');
+  check('Wall demonstration finishes with 30 N on each different object', await wallDemo.locator('[data-pair-force]').allTextContents().then(values => values.join(',') === '30,30'));
+  await wallDemo.screenshot({ path: path.join(__dirname, 'desktop-wall-demonstration.png') });
+  report.screenshots.push('desktop-wall-demonstration.png');
+  await wallDemo.locator('[data-motion-replay]').click();
+  await page.locator('#reset-progress').click();
+  check('Opening the reset dialog pauses background motion', await wallDemo.getAttribute('data-motion-state') === 'paused' || await wallDemo.getAttribute('data-motion-state') === 'ready');
+  await page.locator('#cancel-reset').click();
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  check('Reduced motion hides playback and explains still-step controls', !await wallDemo.locator('[data-motion-play]').isVisible() && await wallDemo.locator('[data-motion-preference]').isVisible());
+  await wallDemo.locator('[data-motion-replay]').click();
+  check('Restart under reduced motion stays still before contact', await wallDemo.getAttribute('data-motion-state') === 'ready' && (await wallDemo.locator('[data-pair-force]').allTextContents()).join(',') === '0,0');
+  const initialArm = await page.locator('#wall-arm-front').getAttribute('d');
+  await wallDemo.locator('[data-motion-step]').focus(); await page.keyboard.press('Enter');
+  check('Keyboard Next step reaches the wall without premature contact forces', initialArm !== await page.locator('#wall-arm-front').getAttribute('d') && (await wallDemo.locator('[data-pair-force]').allTextContents()).join(',') === '0,0');
+  await wallDemo.locator('[data-motion-step]').click();
+  check('Still steps show the same equal and opposite force result', (await wallDemo.locator('[data-pair-force]').allTextContents()).join(',') === '30,30' && await wallDemo.getAttribute('data-motion-state') === 'paused');
+  await go(page, 'activity');
+  await cartDemo.locator('[data-motion-replay]').click();
+  await cartDemo.locator('[data-motion-step]').click();
+  check('Reduced-motion cart steps retain the numerical comparison', await cartDemo.locator('[data-motion-time]').innerText() === 'Model time: 0.5 / 2.0 s' && await cartDemo.getAttribute('data-motion-state') === 'paused');
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  check('Changing motion preferences never starts automatic playback', await cartDemo.getAttribute('data-motion-state') === 'paused');
+  await page.reload();
+  check('Reload resets animation playback without changing saved lesson progress', await page.locator('#cart-demo').getAttribute('data-motion-state') === 'ready' && (await readState(page)).completed.includes('welcome'));
+
   const practice = [
     ['force', 'net-force-practice', '1'], ['third-law', 'third-law-practice', '0'],
     ['everyday-forces', 'everyday-practice', '1'], ['activity', 'cart-force-practice', '1'], ['activity', 'cart-mass-practice', '2']
@@ -171,6 +242,7 @@ const readState = page => page.evaluate(key => JSON.parse(localStorage.getItem(k
   check('Reset clears completion, quiz, and practice', resetState.completed.length === 0 && resetState.quiz === null && Object.keys(resetState.practice).length === 0);
   check('Reset restores Welcome, unchecks practice, and closes reflections', await page.locator('#welcome').isVisible() && await page.locator('.practice-form input:checked').count() === 0 && await page.locator('details[open]').count() === 0);
   check('Reset preserves unrelated local storage', await page.evaluate(() => localStorage.getItem('qa-unrelated')) === 'keep');
+  check('Reset restores both demonstrations to their first still frame', await page.locator('.motion-demo[data-motion-state="ready"]').count() === 2 && (await page.locator('[data-pair-force]').allTextContents()).join(',') === '0,0');
   await go(page, 'force'); await go(page, 'first-law'); await page.goBack();
   check('Browser Back restores the previous section', await page.locator('#force').isVisible());
   await page.goForward();
@@ -213,6 +285,10 @@ const readState = page => page.evaluate(key => JSON.parse(localStorage.getItem(k
   check('Reduced motion disables transitions', await page.locator('#next-section').evaluate(button => getComputedStyle(button).transitionDuration) === '0s');
   await page.emulateMedia({ media: 'print' });
   check('Print exposes all nine lesson sections', await page.locator('.lesson:visible').count() === 9);
+  await page.evaluate(() => window.dispatchEvent(new Event('beforeprint')));
+  check('Print renders useful final diagrams and hides playback controls', (await page.locator('#cart-demo [data-distance]').allTextContents()).join(',') === '8.0,16.0,4.0' && await page.locator('.demo-controls:visible').count() === 0 && (await page.locator('[data-pair-force]').allTextContents()).join(',') === '30,30');
+  await page.evaluate(() => window.dispatchEvent(new Event('afterprint')));
+  check('Leaving print restores the previous still frame', (await page.locator('#cart-demo [data-distance]').allTextContents()).join(',') === '0.0,0.0,0.0');
   await page.emulateMedia({ media: 'screen', reducedMotion: 'no-preference' });
   const audit = await page.evaluate(() => {
     const elements = [...document.querySelectorAll('[id]')];
@@ -254,6 +330,8 @@ const readState = page => page.evaluate(key => JSON.parse(localStorage.getItem(k
   check('Opening index.html directly supports the learning flow', await filePage.locator('#force').isVisible());
   await go(filePage, 'second-law'); await filePage.locator('.preset').nth(1).click();
   check('Direct-file calculator works', await filePage.locator('#acceleration-output').innerText() === '8');
+  await go(filePage, 'activity'); await filePage.locator('#cart-demo [data-motion-step]').click();
+  check('Direct-file motion demonstration works without a server', await filePage.locator('#cart-demo [data-motion-time]').innerText() === 'Model time: 0.5 / 2.0 s');
   await go(filePage, 'knowledge-check'); await filePage.locator('#quiz-form input[value="0"]').check(); await filePage.locator('#quiz-form button[type="submit"]').click();
   check('Direct-file quiz works', await filePage.locator('#quiz-feedback').getAttribute('data-tone') === 'correct');
   await fileContext.close();
@@ -262,6 +340,7 @@ const readState = page => page.evaluate(key => JSON.parse(localStorage.getItem(k
   const noJS = await noJSContext.newPage(); await noJS.goto(baseURL);
   check('Without JavaScript all lessons and the paper quiz remain available', await noJS.locator('.lesson:visible').count() === 9 && await noJS.getByText('A check you can do on paper').isVisible());
   check('Nonfunctional interactive forms are hidden without JavaScript', await noJS.locator('.practice-form:visible').count() === 0 && !await noJS.locator('#force-calculator').isVisible());
+  check('Without JavaScript, both diagrams retain complete static explanations', (await noJS.locator('#cart-demo [data-distance]').allTextContents()).join(',') === '8.0,16.0,4.0' && (await noJS.locator('[data-pair-force]').allTextContents()).join(',') === '30,30' && await noJS.locator('.demo-controls:visible').count() === 0);
   await noJSContext.close();
 
   if (process.env.PHYSICS_QA_AXE) {
