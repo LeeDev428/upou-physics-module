@@ -116,6 +116,13 @@ const readState = page => page.evaluate(key => JSON.parse(localStorage.getItem(k
   check('Reduced-motion cart steps retain the numerical comparison', await cartDemo.locator('[data-motion-time]').innerText() === 'Model time: 0.5 / 2.0 s' && await cartDemo.getAttribute('data-motion-state') === 'paused');
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   check('Changing motion preferences never starts automatic playback', await cartDemo.getAttribute('data-motion-state') === 'paused');
+  await cartDemo.locator('[data-motion-play]').click();
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.waitForFunction(() => document.querySelector('#cart-demo').dataset.motionState !== 'running');
+  const reducedTime = await cartDemo.locator('[data-motion-time]').innerText();
+  await page.waitForTimeout(150);
+  check('Enabling reduced motion during playback stops the next frame', await cartDemo.locator('[data-motion-time]').innerText() === reducedTime && !await cartDemo.locator('[data-motion-play]').isVisible());
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.reload();
   check('Reload resets animation playback without changing saved lesson progress', await page.locator('#cart-demo').getAttribute('data-motion-state') === 'ready' && (await readState(page)).completed.includes('welcome'));
 
