@@ -58,7 +58,7 @@ These are study-time suggestions, not timed requirements. Reading alone takes le
 - **Progressive disclosure:** native disclosure controls let learners think before seeing explanations.
 - **Active learning:** predictions precede calculations and feedback.
 - **Formative feedback:** each submitted choice receives reasoning; incorrect answers are invitations to revise.
-- **Manageable cognitive load:** one quiz question at a time, a shared visual language, and no decorative motion or media playback.
+- **Manageable cognitive load:** one quiz question at a time, a shared visual language, and two optional demonstrations that play only when requested.
 - **Alignment:** the table above connects objectives, content, practice, and assessment.
 - **Independent study:** learners can revisit any section without a gate or instructor approval.
 
@@ -76,6 +76,7 @@ The draft essay asking which law is “the most important” is replaced by ques
 
 - A restrained maroon, sage, and warm-paper palette, with system sans-serif text and a serif display face.
 - An original local SVG jeepney illustration grounds the welcome in a familiar experience without stock imagery or video.
+- Two learner-controlled demonstrations make change visible: the wall illustration moves the hands into contact and shows equal forces growing together; the cart comparison shows how changing force or mass changes acceleration. Predictions come before the cart comparison.
 - Desktop learning-path navigation becomes an expandable menu on smaller screens.
 - Each lesson ends with Previous and Continue controls. Lessons remain freely accessible from the learning path.
 - The calculator exposes net force, mass, units, direction, useful presets, and friendly validation. Editing inputs clears the old result to avoid displaying stale calculations.
@@ -92,7 +93,8 @@ The draft essay asking which law is “the most important” is replaced by ques
 - The mobile menu supports keyboard operation and Escape. The native reset dialog provides modal focus management and supports Escape to cancel.
 - Completion and correctness use text and symbols as well as color.
 - SVG diagrams have text alternatives; decorative icons are hidden from assistive technology.
-- `prefers-reduced-motion` disables transitions. No timed activities or essential animations are used.
+- `prefers-reduced-motion` disables transitions and continuous playback. Both demonstrations offer Next step, numerical/text explanations, and a static alternative. Play/Pause, Replay, and keyboard-operated still steps give the learner control. No learning task is timed.
+- Playback pauses when leaving its lesson, switching browser tabs, or opening the reset dialog. Changing the motion preference also stops active playback; returning to the lesson never starts it automatically.
 - Browser zoom and reflow are supported. Print styles expose all lesson sections and the paper-based knowledge check.
 - Without JavaScript, all authored lesson content remains readable, and a paper-based knowledge check with an answer key is available. Interactive features require JavaScript.
 
@@ -105,6 +107,23 @@ Browser and keyboard checks are documented in [QA.md](./QA.md). These checks are
 - No build step, package installation, database, backend, authentication, or personal-information collection.
 - Direct-file use works without an internet connection. When using a web server, the files must first load; this project does not add a service worker or promise offline reloads of a hosted page.
 - Images are compact vector assets with explicit dimensions to minimize layout shift.
+- Motion uses the existing SVG/CSS drawings and a small local JavaScript controller. It does not download videos, GIFs, or animation libraries.
+
+### How the illustrations were made
+
+The drawings were authored in code with Codex assistance. They are original project illustrations, not stock photographs, third-party character packs, or images generated through a raster image service.
+
+| Illustration | Technique and location | Purpose |
+| --- | --- | --- |
+| Jeepney, passengers, windows, and door | Local [SVG drawing](./assets/jeepney.svg) | Introduce a familiar situation on the welcome screen |
+| Person and wall | Inline SVG in [the lesson markup](./index.html), controlled by [motion.js](./js/motion.js) | Show contact and simultaneous forces on different objects |
+| Boxes, arrows, cart prediction cards | HTML and [CSS shapes](./css/main.css) | Keep force directions and changed quantities clear |
+| Moving comparison carts | Reusable inline SVG symbol, CSS positioning, vanilla JavaScript | Compare acceleration under the same starting conditions |
+| Interface icons | Small inline SVG symbols | Support labels without additional network requests |
+
+Only illustrations with a useful change to observe are animated. The welcome illustration remains a quiet introduction. The wall itself stays fixed: motion is not required for a force to exist.
+
+The cart model assumes constant net forces, all carts starting from rest, and motion to the right. Positions use `distance = 0.5 × acceleration × time²`; speeds use `speed = acceleration × time`, with acceleration calculated as `net force / mass`. All lanes share the same 0–16 m scale and two-second model clock, played at half speed for observation. These are explanatory visuals; learners are not required to learn an additional kinematics formula. The wall demonstration is a qualitative sequence, not a timed simulation of human biomechanics.
 
 ## 8. Technical architecture
 
@@ -114,6 +133,7 @@ css/main.css             Shared tokens, typography, layouts, and components
 css/responsive.css       Tablet, mobile, and print adaptations
 js/app.js                Navigation, practice checks, progress, and reset
 js/calculator.js         Acceleration calculation, validation, and presets
+js/motion.js             Optional wall/cart playback and still-step controls
 js/quiz.js               Question bank, retry state, scoring, and review
 assets/jeepney.svg        Original educational illustration
 assets/favicon.svg       Local site icon
@@ -137,7 +157,7 @@ The public `PhysicsModule` bridge is intentionally small: the quiz can read and 
 
 ### Open the file
 
-Open [index.html](./index.html) in a modern browser. Keep the adjacent `css`, `js`, and `assets` folders together. No installation is needed.
+Extract the entire submission ZIP first, then open [index.html](./index.html) in a modern browser such as Chrome or Edge. Keep the adjacent `css`, `js`, and `assets` folders together. No installation is needed. Opening the HTML inside a ZIP viewer can prevent its styles and scripts from loading.
 
 ### Use a local development server
 
@@ -149,7 +169,9 @@ python -m http.server 4173 --bind 127.0.0.1
 
 Open **http://127.0.0.1:4173**. Stop the server with Ctrl+C. Any simple static server is suitable. Hosting consists of uploading the same static files; there are no environment variables or server-side routes.
 
-In VS Code, the **Preview physics module** task runs the same local server. The `qa` folder is development evidence and is not needed to run or host the learning module.
+In the development workspace, choose **Terminal → Run Task → Preview physics module** in VS Code to run the same server. If port 4173 is already in use, visit the existing preview or choose another port, such as 4174, in both the command and URL. The `qa` folder is development evidence and is not needed to run or host the learning module.
+
+The `127.0.0.1` address works on your own computer only. For assessment, send the ZIP or a separately published static-site URL. No hosting or submission is performed by this project. On phones, a static-site URL is usually the easiest way to open the module.
 
 ### JavaScript syntax checks
 
@@ -158,8 +180,27 @@ If Node.js is available (it is not required to run the module):
 ```powershell
 node --check js/app.js
 node --check js/calculator.js
+node --check js/motion.js
 node --check js/quiz.js
 ```
+
+### Preparing the assessment submission
+
+1. Review the module yourself, including the two animations, both worked examples, every quiz explanation, and the mobile layout. Adjust any wording or decision you cannot explain comfortably.
+2. Use the provided submission ZIP. It includes the working HTML/CSS/JavaScript/SVG assets, this design rationale and disclosure, and QA evidence. Reviewers should extract it and open [index.html](./index.html).
+3. Briefly disclose Codex use in the submission message as well as in this README. The final section distinguishes the AI-assisted work already completed from the candidate review you still need to perform.
+4. Follow the supplied email's deadlines: confirm continued interest by **18 November 2026, 8 AM**, and submit the assessment by **18 November 2026, 10 PM**. These dates are copied from the recruitment email, not checked against later correspondence.
+5. Keep a local copy for the interview, including a backup ZIP. The local-file version lets you demonstrate without an internet connection. Browser progress is separate from the source files and is not included in the ZIP; a reviewer starts with their own progress.
+
+### A suggested five-minute interview walkthrough
+
+- **Learners and objectives:** show the welcome, five objectives, and learning path. Explain how short sections, self-checks, and saved progress support independent secondary learners.
+- **Prediction and feedback:** submit a wrong net-force prediction, then use its explanation to retry. Show that feedback teaches a next step.
+- **Scientific accuracy:** demonstrate the calculator and wall interaction. Explain that acceleration is a change in velocity and that Third Law forces act on different objects.
+- **Purposeful animation:** compare the carts after making a prediction. Explain the shared clock, common starting conditions, and why reduced-motion learners receive still steps and the same numbers.
+- **Assessment and access:** show the first-try quiz score, mobile navigation, direct-file use, and AI disclosure. Mention that real learner and assistive-technology testing would be the next evaluation step.
+
+Useful design decisions to explain include replacing the subjective “most important law” essay with aligned conceptual checks, reserving detailed force diagrams for Module 2, using participation rather than a pass mark for completion, and choosing local vector drawings over streaming media. The estimated two hours is a proposed study allocation, not a requirement supplied by UPOU.
 
 ## 10. AI-use disclosure
 
