@@ -18,8 +18,6 @@
     let printPosition = 0;
 
     function updateControls() {
-      playButton.hidden = reducedMotion.matches;
-      root.querySelector('[data-motion-preference]').hidden = !reducedMotion.matches;
       playButton.textContent = running ? 'Pause' : elapsed === duration ? 'Play again' : elapsed > 0 ? 'Continue' : initialLabel;
       replayButton.textContent = reducedMotion.matches ? 'Restart steps' : 'Replay';
       stepButton.disabled = elapsed === duration;
@@ -36,6 +34,8 @@
 
     function tick(now) {
       if (!running) return;
+      // Also check each frame: some browsers delay media-query change events.
+      if (reducedMotion.matches) { pause(); return; }
       elapsed = Math.min(duration, now - startedAt);
       render(elapsed / duration);
       if (elapsed < duration) frame = requestAnimationFrame(tick);
@@ -131,6 +131,7 @@
   const rightArrow = document.getElementById('wall-force-right');
   const leftArrow = document.getElementById('wall-force-left');
   const pairValues = [...wallRoot.querySelectorAll('[data-pair-force]')];
+  const pairDirections = [...wallRoot.querySelectorAll('[data-pair-direction]')];
   const wallExplanation = wallRoot.querySelector('[data-demo-explanation]');
   const wallTime = wallRoot.querySelector('[data-motion-time]');
 
@@ -145,6 +146,7 @@
     leftArrow.setAttribute('d', `M276 179h-${arrowLength}m${tip}-${tip * 0.75}-${tip} ${tip * 0.75} ${tip} ${tip * 0.75}`);
     rightArrow.style.opacity = leftArrow.style.opacity = push > 0 ? '1' : '0';
     pairValues.forEach(value => setText(value, String(Math.round(30 * push))));
+    pairDirections.forEach((direction, index) => setText(direction, push > 0 ? ['right', 'left'][index] : '— no push'));
     setText(wallTime, `Step ${Math.min(5, Math.floor(fraction * 4) + 1)} of 5`);
     setText(wallExplanation, fraction === 0
       ? 'The hands have not reached the wall. There is no contact force between them yet. Play or use Next step to follow the interaction.'
