@@ -277,14 +277,14 @@ figcaption { font-size: .78rem; color: var(--muted); margin-top: 14px; text-alig
 .force-pair-values p { margin: 0; padding: 10px 12px; border-left: 3px solid var(--green); background: var(--paper); font-size: .79rem; }
 .force-pair-values p + p { border-color: var(--maroon); }
 .force-pair-values span, .force-pair-values strong { display: block; }
-.force-pair-values [data-pair-force] { display: inline; }
+.force-pair-values [data-pair-force], .force-pair-values [data-pair-direction] { display: inline; }
 .force-pair-values strong { font-variant-numeric: tabular-nums; }
 .demo-explanation { font-size: .85rem; color: var(--green); padding: 15px 17px; background: var(--green-light); border-radius: 8px; margin-top: 18px; min-height: 83px; }
 .demo-controls { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
 .demo-controls .button { min-width: 110px; }
 .demo-controls .text-button { min-height: 44px; padding: 8px; }
 .demo-time { font-size: .78rem; color: var(--muted); font-variant-numeric: tabular-nums; margin-left: auto; }
-.motion-preference { font-size: .78rem; color: var(--muted); margin-top: 13px; }
+.motion-preference { display: none; font-size: .78rem; color: var(--muted); margin-top: 13px; }
 .cart-comparison { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 5px 18px 13px; }
 .comparison-lane { color: var(--green); padding: 16px 0 12px; }
 .comparison-lane + .comparison-lane { border-top: 1px solid var(--line); }
@@ -351,4 +351,6 @@ dialog p { font-size: .88rem; color: var(--muted); margin-top: 15px; }
 .no-js-content .callout { margin-bottom: 24px; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  [data-motion-play] { display: none !important; }
+  .motion-preference { display: block; }
 }
